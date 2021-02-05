@@ -1,0 +1,28 @@
+version: '3.1'
+services:
+  app:
+    image: mo-app:latest
+    build:
+      context: app/
+    volumes:
+      - /Users/cro/src/mo/prodev-dockerized-services/app/data:/app/data
+    ports:
+      - "8081:80"
+
+  ghi:
+    image: mo-ghi:latest
+    build:
+      context: ghi/
+    environment:
+      APP_URL: http://localhost:8081/api/items
+      AUTH_URL: http://localhost:8082/api/login
+      PORT: 8080
+    ports:
+      - "8080:8080"
+
+  auth:
+    image: mo-auth:latest
+    build:
+      context: auth/
+    ports:
+      - "8082:80"
